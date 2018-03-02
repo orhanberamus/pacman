@@ -1,7 +1,7 @@
 $(function() {
   var c=document.getElementById("myCanvas");
   var ctx=c.getContext("2d");
-  var totaltext = document.getElementById("total");
+  var totalText = document.getElementById("total");
   //ctx.scale(20, 20);
   var width = c.width;
   var height = c.height;
@@ -130,7 +130,7 @@ function move(direction){
   }
     board[pacman.x][pacman.y] = 3;
 
-    totaltext.innerHTML = total;
+    totalText.innerHTML = total;
 
 }
 function enemyMove(){
@@ -447,17 +447,19 @@ function checkdeath(){
     if(Math.abs(enemies[i].x - pacman.x) <= 0 && Math.abs(enemies[i].y - pacman.y) <=0 ){
       gameOver = true;
       drawBoard();
-      ctx.fillStyle="red";
-      ctx.font = "100px Arial";
-      ctx.fillText("Kaybettin",width/4,height/2);
+      ctx.lineWidth=2;
+      ctx.strokeStyle="red";
+      ctx.font = "100px Georgia";
+      ctx.strokeText("KAYBETTİN",width/6,height/2);
       clearIntervals();
     }
     if(total === targetPoint - enemies.length){
       gameWin = true;
       drawBoard();
-      ctx.fillStyle="yellow";
+      ctx.lineWidth=2;
+      ctx.strokeStyle="yellow";
       ctx.font = "100px Arial";
-      ctx.fillText("Kazandın",width/4,height/2);
+      ctx.strokeText("KAZANDIN",width/6,height/2);
       clearIntervals();
     }
   }
