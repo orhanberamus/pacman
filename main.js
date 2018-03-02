@@ -373,7 +373,7 @@ function drawBoard(){
 
       }else if(board[k][n] === 4){
         ctx.fillStyle="rgb(255, 153, 0)";
-        ctx.fillRect((k * res)+5, (n * res) +5, res -20, res - 20);
+        ctx.fillRect((k * res)+10, (n * res) +10, res -20, res - 20);
       }
       // for(var m = 0; m < walls.length; m ++){
       //   if(walls[m].x === k && walls[m].y === n){
@@ -446,6 +446,7 @@ function checkdeath(){
     console.log(Math.abs(enemies[i].x - pacman.x));
     if(Math.abs(enemies[i].x - pacman.x) <= 0 && Math.abs(enemies[i].y - pacman.y) <=0 ){
       gameOver = true;
+      drawBoard();
       ctx.fillStyle="red";
       ctx.font = "100px Arial";
       ctx.fillText("Kaybettin",width/4,height/2);
@@ -453,6 +454,7 @@ function checkdeath(){
     }
     if(total === targetPoint - enemies.length){
       gameWin = true;
+      drawBoard();
       ctx.fillStyle="yellow";
       ctx.font = "100px Arial";
       ctx.fillText("Kazandın",width/4,height/2);
