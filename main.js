@@ -5,11 +5,12 @@ $(function() {
   //ctx.scale(20, 20);
   var width = c.width;
   var height = c.height;
-  var grid = 10;
+  var grid = 20;
   var direction = 0;
   var enemyDirection = 1;
   var directionold = 0;
   var res = width / grid;
+  var resWidth = width / grid;
   var gravity = 0;
   var rand = Math.floor((Math.random() * 5));
   var keychangable = true;
@@ -23,12 +24,14 @@ $(function() {
   var pacman = {x: 3, y: 2};
   var enemy = {x: 8, y: 6};
   var enemy2 = {x: 4, y: 5};
+  var enemy3 = {x: 10, y: 15};
   var targetPoint = 0;
   //var randomenemy = {x: 12, y: 10};
   var enemies = [];
   var randomenemies = [];
   enemies.push(enemy);
   enemies.push(enemy2);
+  enemies.push(enemy3);
   //randomenemies.push(randomenemy);
   //var walls = [{x: 3, y:2}, {x: 3, y:3}];
   var board = [];
@@ -44,9 +47,6 @@ $(function() {
     board.push(arr);
   }
 
-  createWalls();
-  createWalls();
-  createWalls();
   createWalls();
   generateFood();
   board[pacman.x][pacman.y] = 3;
@@ -137,7 +137,13 @@ function enemyMove(){
   for(var i = 0; i < enemies.length; i++){
     var freepaths = getFreePaths(enemies[i]);
     console.log(Math.abs(enemies[i].x - pacman. x ))
-    board[enemies[i].x][enemies[i].y] = onceki[i];
+    if(onceki[i] === 4 && i === 0){
+        board[enemies[i].x][enemies[i].y] = onceki[i + 1];
+    }else if(onceki[i] === 4 && i === 1){
+      board[enemies[i].x][enemies[i].y] = onceki[i -1];
+    }else{
+      board[enemies[i].x][enemies[i].y] = onceki[i];
+    }
     console.log( Math.abs(enemies[i].y - pacman.y))
     if(Math.abs(enemies[i].x - pacman.x ) >= Math.abs(enemies[i].y - pacman.y)){// x farkı daha buyuk
       if(enemies[i].x < pacman.x){ // enemy saga gitmek istio
@@ -311,11 +317,11 @@ function drawBoard(){
 
       if(board[k][n] === 0){
         ctx.fillStyle="black";
-        ctx.fillRect((k * res), (n * res), res -80, res - 80);
+        ctx.fillRect((k * res), (n * res), res/30, res/30);
       }else if(board[k][n] === 1){
         ctx.fillStyle="yellow";
         ctx.beginPath();
-        ctx.arc((k * res) + res/2,(n * res) + res/2,4,0,2*Math.PI);
+        ctx.arc((k * res) + res/2,(n * res) + res/2,res/12,0,2*Math.PI);
         ctx.fill();
       }else if(board[k][n] === 2){
         ctx.lineWidth=10;
@@ -326,47 +332,47 @@ function drawBoard(){
         if(!pacmanOpen){
           ctx.fillStyle="yellow";
           ctx.beginPath();
-          ctx.arc(( k* res) + res/2,(n * res) + res/2, 20, 0 * Math.PI, 2 * Math.PI, false);
+          ctx.arc(( k* res) + res/2,(n * res) + res/2, res/4, 0 * Math.PI, 2 * Math.PI, false);
           ctx.fillStyle = "rgb(255, 255, 0)";
           ctx.fill();
         }else{
           if(direction === 1){
             ctx.fillStyle="yellow";
             ctx.beginPath();
-            ctx.arc(( k* res) + res/2,(n * res) + res/2, 20, 0.25 * Math.PI, 1.25 * Math.PI, false);
+            ctx.arc(( k* res) + res/2,(n * res) + res/2, res/4, 0.25 * Math.PI, 1.25 * Math.PI, false);
             ctx.fillStyle = "rgb(255, 255, 0)";
             ctx.fill();
             ctx.beginPath();
-            ctx.arc((k * res) + res/2,(n * res) + res/2, 20, 1.75 * Math.PI, 0.75 * Math.PI, false);
+            ctx.arc((k * res) + res/2,(n * res) + res/2, res/4, 1.75 * Math.PI, 0.75 * Math.PI, false);
             ctx.fill();
           }
           else if(direction === 2){
             ctx.fillStyle="yellow";
             ctx.beginPath();
-            ctx.arc(( k* res) + res/2,(n * res) + res/2, 20, 0.25 * Math.PI, 1.25 * Math.PI, false);
+            ctx.arc(( k* res) + res/2,(n * res) + res/2, res/4, 0.25 * Math.PI, 1.25 * Math.PI, false);
             ctx.fillStyle = "rgb(255, 255, 0)";
             ctx.fill();
             ctx.beginPath();
-            ctx.arc((k * res) + res/2,(n * res) + res/2, 20, 0.75 * Math.PI, 1.75 * Math.PI, false);
+            ctx.arc((k * res) + res/2,(n * res) + res/2, res/4, 0.75 * Math.PI, 1.75 * Math.PI, false);
             ctx.fill();
           }
           else if(direction === 3){
             ctx.fillStyle="yellow";
             ctx.beginPath();
-            ctx.arc(( k* res) + res/2,(n * res) + res/2, 20, 0.75 * Math.PI, 1.75 * Math.PI, false);
+            ctx.arc(( k* res) + res/2,(n * res) + res/2, res/4, 0.75 * Math.PI, 1.75 * Math.PI, false);
             ctx.fillStyle = "rgb(255, 255, 0)";
             ctx.fill();
             ctx.beginPath();
-            ctx.arc((k * res) + res/2,(n * res) + res/2, 20, 1.25 * Math.PI, 0.25 * Math.PI, false);
+            ctx.arc((k * res) + res/2,(n * res) + res/2, res/4, 1.25 * Math.PI, 0.25 * Math.PI, false);
             ctx.fill();
           }else if(direction === 4){
             ctx.fillStyle="yellow";
             ctx.beginPath();
-            ctx.arc(( k* res) + res/2,(n * res) + res/2, 20, 1.75 * Math.PI, 0.75 * Math.PI, false);
+            ctx.arc(( k* res) + res/2,(n * res) + res/2, res/4, 1.75 * Math.PI, 0.75 * Math.PI, false);
             ctx.fillStyle = "rgb(255, 255, 0)";
             ctx.fill();
             ctx.beginPath();
-            ctx.arc((k * res) + res/2,(n * res) + res/2, 20, 1.25 * Math.PI, 0.25 * Math.PI, false);
+            ctx.arc((k * res) + res/2,(n * res) + res/2, res/4, 1.25 * Math.PI, 0.25 * Math.PI, false);
             ctx.fill();
           }
         }
@@ -402,7 +408,12 @@ function createWalls(){
         for(var k = 0; k < 2; k++){
             board[i][j + k] = 2;
         }
-
+      }
+      if(j % 5 === 0 ){
+        board[i][j] = 0;
+      }
+      if(j % 3 === 0 ){
+        board[i][j] = 0;
       }
     }
   }
@@ -424,7 +435,13 @@ function enemyRandomMove(){
      var rand = Math.floor((Math.random() * 4) + 1);
      var paths = getFreePaths(enemies[i]);
      //console.log(rand);
-     board[enemies[i].x][enemies[i].y] = onceki[i];
+     if(onceki[i] === 4 && i === 0){
+         board[enemies[i].x][enemies[i].y] = onceki[i + 1];
+     }else if(onceki[i] === 4 && i === 1){
+       board[enemies[i].x][enemies[i].y] = onceki[i -1];
+     }else{
+       board[enemies[i].x][enemies[i].y] = onceki[i];
+     }
      if(rand === 1 && paths[0] === 1){
        enemies[i].y -=1;
      }else if(rand === 2 && paths[1] === 1){
