@@ -23,15 +23,13 @@ $(function() {
   var pacmanOpen = true;
   var pacman = {x: 3, y: 2};
   var enemy = {x: 8, y: 6};
-  var enemy2 = {x: 4, y: 5};
-  var enemy3 = {x: 10, y: 15};
+  var enemy2 = {x: 18, y: 1};
   var targetPoint = 0;
   //var randomenemy = {x: 12, y: 10};
   var enemies = [];
   var randomenemies = [];
   enemies.push(enemy);
   enemies.push(enemy2);
-  enemies.push(enemy3);
   //randomenemies.push(randomenemy);
   //var walls = [{x: 3, y:2}, {x: 3, y:3}];
   var board = [];
@@ -465,18 +463,18 @@ function checkdeath(){
       gameOver = true;
       drawBoard();
       ctx.lineWidth=2;
-      ctx.strokeStyle="red";
+      ctx.fillStyle="red";
       ctx.font = "100px Georgia";
-      ctx.strokeText("KAYBETTİN",width/6,height/2);
+      ctx.fillText("KAYBETTİN",width/6,height/2);
       clearIntervals();
     }
     if(total === targetPoint - enemies.length){
       gameWin = true;
       drawBoard();
       ctx.lineWidth=2;
-      ctx.strokeStyle="yellow";
+      ctx.fillStyle="yellow";
       ctx.font = "100px Arial";
-      ctx.strokeText("KAZANDIN",width/6,height/2);
+      ctx.fillText("KAZANDIN",width/6,height/2);
       clearIntervals();
     }
   }
@@ -491,6 +489,7 @@ function clearIntervals(){
   function updateEnemy(){
     var rand = Math.floor((Math.random() * 4) + 1);
     if(rand < 2){
+      enemyRandomMove
       enemyRandomMove();
     }else{
         enemyMove();
